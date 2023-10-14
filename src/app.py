@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt  # Import the pyplot module
 
 # Get the list of S&P 500 companies from Wikipedia
 url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
-response = requests.get(url)
+response = requests.get(url, timeout=30)
 soup = BeautifulSoup(response.text, 'html.parser')
-
 table = soup.find('table', {'class': 'wikitable'})
 df = pd.read_html(str(table))[0]
 tickers = df['Symbol'].tolist()
