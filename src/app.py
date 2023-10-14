@@ -20,8 +20,9 @@ data = yf.download(tickers, start='2023-01-01', end='2023-12-31')
 # Data is now stored in the 'data' variable as a Pandas DataFrame
 print(data.head())
 
-output_file = data.to_csv('output.csv')
-excel_file = data.to_excel('output.xlsx')
+# reroute outputs to be in data folder
+csv_file = data.to_csv('data/output.csv')
+excel_file = data.to_excel('data/output.xlsx')
 
 
 
