@@ -1,21 +1,29 @@
-import matplotlib.pyplot as plt  # Import the pyplot module
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy import stats
 
 
-# # Calculate daily returns
+data = pd.read_excel('data/output.xlsx', header=1, index_col=0)
 
+column_name = data.columns[0]
 
-# daily_returns = data['Adj Close'].pct_change()
+quantiles, _ = stats.probplot(data[column_name], dist="norm")
 
-# # Plot the daily returns of a specific company (e.g., Apple)
-# daily_returns['AAPL'].plot()
-# plt.title('Daily Returns of Apple')
-# plt.xlabel('Date')
-# plt.ylabel('Returns')
-# plt.show()
+# Calculate mean and standard deviation of the data
+mean = data[column_name].mean()
+std = data[column_name].std()
 
-# mean_returns = daily_returns.mean()
-# mean_returns.plot(kind='bar')
-# plt.title('Average Daily Returns for S&P 500 Stocks')
-# plt.xlabel('Stock Ticker')
-# plt.ylabel('Average Daily Return')
-# plt.show()
+# Create a Q-Q plot
+plt.figure(figsize=(8, 6))
+plt.scatter(quantiles[0], data[column_name].sort_values())
+plt.title('Q-Q Plot for Distribution of Stock Prices')
+plt.xlabel('Theoretical Quantiles')
+plt.ylabel('Sample Quantiles')
+plt.grid(True)
+
+# Add a reference line
+plt.plot([quantiles[0][0], quantiles[0][-1]], [mean - std, mean + std], color='red', linestyle='--')
+
+# Show the Q-Q plot
+plt.show()
