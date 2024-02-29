@@ -13,8 +13,9 @@ df = pd.read_html(str(table))[0]
 tickers = df['Symbol'].tolist()
 
 # Fetch stock data for each company
-data = yf.download(tickers, start='2023-01-01', end='2023-12-31')
+data = yf.download(tickers, start='2023-01-01', end='2024-2-27')
 
 # Save the data to CSV and Excel
 csv_file = data.to_csv('data/output.csv')
 excel_file = data.to_excel('data/output.xlsx')
+
